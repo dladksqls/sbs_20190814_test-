@@ -7,6 +7,8 @@
 <%@ include file="../part/head.jspf"%>
 <script>
 	var articleId = parseInt('${param.id}');
+	var loginMemberPermissionLevel = ${loginedMember.permissionLevel > 0 ? loginedMember.permissionLevel : 0};
+	var loginedMemberId = ${loginedMemberId};
 </script>
 
 <script>
@@ -22,7 +24,7 @@
 		$tr.removeClass('edit-mode');
 	}
 
-	var loginMemberPermissionLevel = ${loginedMember.PermissionLevel > 0 ? loginedMember.PermissionLevel :0};
+	
 </script>
 
 <style>
