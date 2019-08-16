@@ -21,9 +21,18 @@
 		var $tr = $el.closest('tr');
 		$tr.removeClass('edit-mode');
 	}
+
+	var loginMemberPermissionLevel = ${loginedMember.PermissionLevel > 0 ? loginedMember.PermissionLevel :0};
 </script>
 
 <style>
+
+.deletable-item {
+	display: none;
+}
+.deletable .deletable-item {
+	display: block;
+}
 .editable-item {
 	display: none;
 }
