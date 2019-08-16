@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sbs.cuni.dto.Article;
 import com.sbs.cuni.dto.ArticleReply;
 import com.sbs.cuni.dto.Board;
+import com.sbs.cuni.dto.Member;
 import com.sbs.cuni.service.ArticleService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -80,9 +81,31 @@ public class ArticleController {
 	}
 
 	@RequestMapping("/article/add")
-	public String showAdd(long boardId, Model model) {
+	public String showAdd(long boardId, Model model, HttpServletRequest request) {
 		Board board = articleService.getBoard(boardId);
 
+		Member member = (Member) request.getAttribute("loginedMember");
+
+		String msg = "";
+
+		String redirectUrl = "";
+
+		long permissionLevel = 0;
+
+		if ( boardId == 1 ) {
+			permissionLevel = member.getPermissionLevel();
+
+			if ( permissionLevel != 1 ) {
+				msg = "공지사항에 게시할 권한이 없습니다.";
+
+				redirectUrl = "/";
+
+				model.addAttribute("alertMsg", msg);
+				model.addAttribute("redirectUrl", redirectUrl);
+
+				return "common/redirect";
+			}
+		}
 		model.addAttribute("board", board);
 
 		return "article/add";
